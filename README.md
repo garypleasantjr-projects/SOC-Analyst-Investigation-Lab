@@ -2,228 +2,231 @@
 
 ## Overview
 
-This repository documents my hands-on **Security Operations Center (SOC) Analyst lab** focused on developing practical experience with **SIEM monitoring, security alert triage, log analysis, endpoint security monitoring, event correlation, incident investigation, and incident response fundamentals**.
+This repository documents my hands-on **Security Operations Center (SOC) Analyst lab**, where I am building practical experience with **SIEM monitoring, alert triage, Windows security logs, endpoint telemetry, event correlation, threat detection, and incident investigation**.
 
-The lab uses **Wazuh as a Security Information and Event Management (SIEM) platform**, with a monitored **Windows 11 endpoint** and an **Ubuntu Server** hosting the centralized Wazuh security infrastructure.
+The lab uses **Wazuh** as the SIEM platform, a **Windows 11 Pro virtual machine** as the monitored endpoint, and an **Ubuntu Server virtual machine** as the centralized Wazuh server.
 
-The objective of this project is to move beyond theoretical cybersecurity knowledge by generating controlled security events, collecting endpoint telemetry, investigating alerts, analyzing evidence, and documenting findings using workflows similar to those performed by SOC analysts.
+The purpose of this project is to practice the full SOC investigation process:
 
-As the lab develops, this repository will contain multiple security investigations involving authentication activity, Windows security events, endpoint telemetry, network activity, and other SOC-focused scenarios.
+```text
+Generate activity
+      ↓
+Collect security telemetry
+      ↓
+Detect and review alerts
+      ↓
+Analyze event data
+      ↓
+Correlate evidence
+      ↓
+Determine what happened
+      ↓
+Classify and document the incident
+```
+
+Each investigation in this repository focuses on a specific security scenario and documents the evidence, analysis, findings, and analyst conclusion.
 
 ---
 
-## SOC Skills Demonstrated
+## Lab Environment
 
-This project is designed to develop and demonstrate practical experience in:
+### Windows 11 Endpoint
+
+The Windows 11 Pro VM acts as the monitored endpoint.
+
+The **Wazuh Agent** collects security telemetry from the system, including Windows Security Event Log activity, and forwards it to the centralized Wazuh infrastructure.
+
+### Ubuntu Wazuh Server
+
+The Ubuntu Server VM hosts the Wazuh security stack:
+
+- **Wazuh Manager** — analyzes incoming security events and applies detection rules
+- **Wazuh Indexer** — stores and indexes security telemetry
+- **Wazuh Dashboard** — provides the browser-based interface used for alert triage and investigation
+
+### Architecture
+
+```text
+Windows 11 Pro Endpoint
+        |
+        | Security Events
+        v
+     Wazuh Agent
+        |
+        v
+   Wazuh Manager
+        |
+        v
+   Wazuh Indexer
+        |
+        v
+  Wazuh Dashboard
+        |
+        v
+   SOC Investigation
+```
+
+---
+
+## SOC Analyst Skills
+
+This lab is focused on developing practical experience with:
 
 - **Security Information and Event Management (SIEM)**
+- **Security Monitoring**
 - **SOC Alert Triage**
-- **Security Event Monitoring**
-- **Windows Security Event Log Analysis**
-- **Endpoint Monitoring**
+- **Windows Security Event Logs**
+- **Endpoint Telemetry**
 - **Log Analysis**
 - **Authentication Monitoring**
-- **Security Event Correlation**
+- **Event Correlation**
+- **Threat Detection**
 - **Incident Investigation**
 - **Incident Response Fundamentals**
-- **Threat Detection and Analysis**
-- **MITRE ATT&CK Interpretation**
-- **Network Security Monitoring**
-- **Security Telemetry Analysis**
+- **MITRE ATT&CK**
 - **PowerShell**
-- **Windows and Linux Administration**
-- **Virtualized Security Lab Environments**
+- **Windows Administration**
+- **Linux Administration**
+- **Network Security Analysis**
 - **Technical Incident Documentation**
 
 ---
 
-## Lab Architecture
+## Investigation Methodology
+
+Each investigation follows a structured SOC workflow.
+
+### 1. Generate Controlled Activity
+
+Security-related activity is intentionally generated inside the isolated lab environment.
+
+### 2. Identify Endpoint Evidence
+
+Relevant Windows or system logs are reviewed to determine what telemetry was generated.
+
+### 3. Review SIEM Alerts
+
+Wazuh is used to identify detection rules, alert severity, affected accounts, hosts, processes, IP addresses, and other relevant fields.
+
+### 4. Correlate Evidence
+
+Events are compared using information such as:
+
+- Timestamps
+- User accounts
+- Hostnames
+- Source and destination IP addresses
+- Event IDs
+- Processes
+- Authentication methods
+- Detection rules
+
+### 5. Perform Analyst Assessment
+
+The activity is classified based on the available evidence.
+
+Possible dispositions include:
 
 ```text
-                    SOC Analyst
-                         |
-                         v
-                  Wazuh Dashboard
-                         |
-                         v
-                   Wazuh Indexer
-                         |
-                         v
-                   Wazuh Manager
-                         |
-                 Ubuntu Server VM
-                         ^
-                         |
-                  Security Events
-                         |
-                    Wazuh Agent
-                         |
-                         ^
-                Windows 11 Pro VM
-                Monitored Endpoint
+Benign
+Expected Activity
+Suspicious
+Malicious
+Needs Further Investigation
+Needs Escalation
 ```
 
-### Monitored Endpoint
+### 6. Document Findings
 
-**Windows 11 Pro**
-
-The Windows virtual machine acts as the monitored enterprise-style endpoint.
-
-The Wazuh agent collects supported endpoint and security telemetry from the system and forwards relevant events to the centralized Wazuh infrastructure for analysis.
-
-Current monitoring includes the **Windows Security Event Log**, allowing authentication and other Windows security activity to be investigated through the SIEM.
-
-### SIEM Infrastructure
-
-**Ubuntu Server + Wazuh**
-
-The Ubuntu Server virtual machine hosts the centralized Wazuh environment:
-
-- **Wazuh Manager** — analyzes incoming security telemetry and applies detection rules.
-- **Wazuh Indexer** — stores and indexes security event data.
-- **Wazuh Dashboard** — provides the browser-based interface used for alert triage, event searching, and security investigations.
+Each investigation records the scenario, evidence, analysis, conclusion, and recommended response.
 
 ---
 
-## Investigation Workflow
+## Current Investigation
 
-The general SOC workflow used throughout this repository is:
+### Investigation 01 — Windows Authentication Failure
 
-```text
-Controlled Security Activity
-          |
-          v
-Endpoint Generates Telemetry
-          |
-          v
-Windows / System Logs
-          |
-          v
-Wazuh Agent
-          |
-          v
-Wazuh Manager
-          |
-          v
-Detection Rule / Alert
-          |
-          v
-SIEM Investigation
-          |
-          v
-Evidence Correlation
-          |
-          v
-Analyst Assessment
-          |
-          v
-Incident Classification / Disposition
-          |
-          v
-Investigation Documentation
-```
-
-Each investigation is intended to answer questions commonly encountered during SOC alert triage:
-
-- **What happened?**
-- **When did it happen?**
-- **Which user, host, process, or IP address was involved?**
-- **What evidence supports the alert?**
-- **Was the activity expected, suspicious, or malicious?**
-- **Does the activity require escalation?**
-- **What response or remediation would be appropriate?**
-
----
-
-## Current Investigations
-
-### 01 — Windows Authentication Failure Investigation
-
-The first investigation examines intentionally generated failed authentication attempts against a local Windows account.
+The first completed investigation focuses on failed local authentication attempts against a Windows endpoint.
 
 The investigation includes:
 
-- Windows **Security Event ID 4625**
-- Failed authentication analysis
-- Wazuh alert detection
-- **Wazuh Rule 60122**
-- Account and host identification
-- Logon type analysis
+- Windows Security Event ID **4625**
+- Failed password attempts
+- Local account activity
+- Interactive logon analysis
+- Wazuh Rule **60122**
+- SIEM alert review
+- Endpoint and account identification
 - Source-address analysis
-- SIEM event correlation
-- Alert classification
-- Incident disposition
+- Timestamp correlation
+- Analyst classification
 
-The controlled activity was successfully detected by Wazuh and investigated through the SIEM dashboard.
+The activity was intentionally generated within the lab and successfully detected by Wazuh.
 
-**Disposition:** Benign / Authorized Testing
+**Final disposition:** Authorized Testing / Benign Activity
 
 ---
 
-## Tools & Technologies
+## Technologies
 
-| Category | Technology |
+| Area | Technology |
 |---|---|
-| SIEM / Security Monitoring | Wazuh |
+| SIEM | Wazuh |
 | Endpoint | Windows 11 Pro |
 | Server | Ubuntu Server |
 | Virtualization | VMware Fusion |
 | Windows Logging | Windows Security Event Log |
-| Administration / Investigation | PowerShell |
+| Investigation | Wazuh Dashboard |
+| Administration | PowerShell |
 | Networking | TCP/IP |
 | Security Framework | MITRE ATT&CK |
-| Version Control / Documentation | Git & GitHub |
+| Documentation | GitHub |
 
 ---
 
-## Current Lab Capabilities
+## Repository Structure
 
-The environment currently provides a working endpoint-to-SIEM monitoring pipeline:
+As the project grows, investigations will be organized individually.
 
 ```text
-Windows Endpoint
-      ↓
-Security Event Generation
-      ↓
-Windows Security Event Log
-      ↓
-Wazuh Agent
-      ↓
-Wazuh Manager
-      ↓
-Detection Rules
-      ↓
-Wazuh Indexer
-      ↓
-Wazuh Dashboard
-      ↓
-SOC Investigation
+SOC-Analyst-Investigation-Lab/
+│
+├── README.md
+├── .gitignore
+│
+├── investigations/
+│   ├── 01-windows-authentication-failure/
+│   ├── 02-...
+│   └── 03-...
+│
+└── screenshots/
 ```
 
-The first investigation has validated that Windows authentication failures can be generated, collected, transmitted, detected, searched, and analyzed through the environment.
+Each investigation will contain its own documentation and supporting evidence.
 
 ---
 
-## Repository Goals
+## Project Goals
 
-This repository will expand as additional SOC investigations are completed.
+The goal of this repository is to build practical SOC Analyst experience by repeatedly working through realistic security-monitoring scenarios.
 
-Future investigations will build on the current SIEM environment and introduce additional forms of endpoint and network telemetry while maintaining a focus on:
+Future investigations will expand into additional areas such as:
 
-- Alert triage
-- Evidence-based analysis
-- Event correlation
-- Threat detection
-- Incident investigation
-- Analyst decision-making
-- Clear technical documentation
+- Windows endpoint activity
+- Sysmon telemetry
+- Authentication monitoring
+- Process analysis
+- Network connections
+- SSH activity
+- Suspicious account behavior
+- Security event correlation
 
-The goal is not simply to generate alerts, but to understand **why an alert occurred, what the underlying evidence shows, and how a SOC analyst should respond to it**.
+The focus of the project is not only detecting alerts, but understanding the underlying evidence and making an informed analyst decision.
 
 ---
 
 ## Disclaimer
 
-All security activity documented in this repository is performed within an isolated, personally owned virtual lab environment for educational and defensive cybersecurity purposes.
+All activity in this repository is performed within an isolated, personally owned virtual lab environment for educational and defensive cybersecurity purposes.
 
 No testing is performed against systems without authorization.
