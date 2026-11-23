@@ -178,6 +178,10 @@ At this point the account had not yet been added to the local Administrators gro
 
 This demonstrated that successful authentication did not automatically grant the account administrative authorization.
 
+![Password change denied before administrator membership](evidence/06-terminal-password-change-denied.webp)
+
+*Remote SSH session showing the initial `net user SOC-SSH-TEST-USER *` attempt failing with System error 5 and Access is denied.*
+
 ---
 
 ## 5. Correlate the Administrators Group Change
@@ -198,6 +202,10 @@ Group Domain: Builtin
 ```
 
 The member SID in the 4732 event matched the SID associated with `SOC-SSH-TEST-USER` in the other captured events, allowing the group-membership change to be correlated with the test account.
+
+![Wazuh Event ID 4732 Administrators group change](evidence/04-wazuh-4732-administrators-group.webp)
+
+*Wazuh Event ID 4732 showing a member added to the built-in Administrators group.*
 
 ---
 
@@ -226,6 +234,10 @@ SeDelegateSessionUserImpersonatePrivilege
 ```
 
 This provided evidence that the new logon session received elevated Windows privileges after the account was added to Administrators.
+
+![Wazuh Event ID 4672 special privileges](evidence/05-wazuh-4672-special-privileges.webp)
+
+*Wazuh Event ID 4672 showing special privileges assigned to the new `SOC-SSH-TEST-USER` logon.*
 
 ---
 
@@ -257,9 +269,13 @@ Password Last Set: 11/23/2026 12:23:03 PM
 
 The successful command output and the account-change event together supported the conclusion that the password modification succeeded after the account gained administrative privileges.
 
-![Privilege and password-change evidence](evidence/04-privilege-and-password-change.webp)
+![Password change completed successfully](evidence/07-terminal-password-change-success.webp)
 
-*Combined evidence showing the Administrators-group change, privileged logon, denied password-change attempt, successful retry, and resulting account-change event.*
+*Remote SSH session showing the same password-change command completing successfully after administrator membership.*
+
+![Wazuh Event ID 4738 account changed](evidence/08-wazuh-4738-account-changed.webp)
+
+*Wazuh Event ID 4738 showing `SOC-SSH-TEST-USER` was changed and recording the updated Password Last Set value.*
 
 ---
 
@@ -341,9 +357,13 @@ The `evidence/` directory contains the screenshots used to support the findings 
 - [Wazuh authentication failures](evidence/01-wazuh-authentication-failures.webp)
 - [Wazuh Event ID 4624 SSH logon details](evidence/02-wazuh-4624-ssh-logon-details.webp)
 - [OpenSSH source-address evidence](evidence/03-openssh-source-address.webp)
-- [Privilege and password-change evidence](evidence/04-privilege-and-password-change.webp)
+- [Wazuh Event ID 4732 Administrators-group change](evidence/04-wazuh-4732-administrators-group.webp)
+- [Wazuh Event ID 4672 special privileges](evidence/05-wazuh-4672-special-privileges.webp)
+- [Terminal password-change denial](evidence/06-terminal-password-change-denied.webp)
+- [Terminal password-change success](evidence/07-terminal-password-change-success.webp)
+- [Wazuh Event ID 4738 account change](evidence/08-wazuh-4738-account-changed.webp)
 
-The evidence set is intentionally limited to screenshots that demonstrate a distinct part of the investigation.
+The evidence set contains separate screenshots for each distinct step rather than combining multiple events into one image.
 
 ---
 
