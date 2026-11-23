@@ -144,7 +144,7 @@ Each investigation records the scenario, evidence, analysis, conclusion, and rec
 
 ## Current Investigation
 
-### Investigation 01 — Windows Authentication Failure
+### [Investigation 01 — Windows Authentication Failure](investigations/01-windows-authentication-failure/README.md)
 
 The first completed investigation focuses on failed local authentication attempts against a Windows endpoint.
 
@@ -196,6 +196,7 @@ SOC-Analyst-Investigation-Lab/
 │
 ├── investigations/
 │   ├── 01-windows-authentication-failure/
+│   │   └── README.md
 │   ├── 02-...
 │   └── 03-...
 │
