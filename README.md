@@ -142,7 +142,7 @@ Each investigation records the scenario, evidence, analysis, conclusion, and rec
 
 ---
 
-## Current Investigation
+## Current Investigations
 
 ### [Investigation 01 — Windows Authentication Failure](investigations/01-windows-authentication-failure/README.md)
 
@@ -162,6 +162,24 @@ The investigation includes:
 - Analyst classification
 
 The activity was intentionally generated within the lab and successfully detected by Wazuh.
+
+**Final disposition:** Authorized Testing / Benign Activity
+
+### [Investigation 02 — Remote SSH Authentication and Privilege Change](investigations/02-remote-ssh-authentication-privilege-change/README.md)
+
+The second investigation focuses on remote SSH authentication against the Windows endpoint and the security events generated when the test account was later added to the local Administrators group.
+
+The investigation includes:
+
+- Failed and successful SSH authentication
+- Windows Security Event ID **4624**
+- OpenSSH source-address evidence
+- Windows Security Event ID **4732**
+- Windows Security Event ID **4672**
+- Windows Security Event ID **4738**
+- Authentication versus authorization
+- Privilege-change correlation
+- Wazuh SIEM analysis
 
 **Final disposition:** Authorized Testing / Benign Activity
 
@@ -197,7 +215,8 @@ SOC-Analyst-Investigation-Lab/
 ├── investigations/
 │   ├── 01-windows-authentication-failure/
 │   │   └── README.md
-│   ├── 02-...
+│   ├── 02-remote-ssh-authentication-privilege-change/
+│   │   └── README.md
 │   └── 03-...
 │
 └── screenshots/
