@@ -121,16 +121,17 @@ The evidence confirmed that the event existed **before** Wazuh processing. This 
 
 ## 3. Verify Wazuh Security-Log Collection
 
-The Windows Wazuh agent configuration was checked to verify that the Security event channel was enabled:
+The existing Wazuh agent configuration on the Windows endpoint was inspected to confirm that the Windows `Security` Event Channel was configured as a monitored log source.
 
-```xml
-<localfile>
-    <location>Security</location>
-    <log_format>eventchannel</log_format>
-</localfile>
+From an Administrator PowerShell session, the agent configuration file was searched for the Security-channel entry:
+
+```powershell
+Select-String -Path 'C:\Program Files (x86)\ossec-agent\ossec.conf' -Pattern '<location>Security</location>' -Context 2,2
 ```
 
-This confirmed that the Wazuh agent was configured to collect Windows Security Event Log data.
+The surrounding configuration showed that `Security` was defined inside a `<localfile>` block and used the `eventchannel` log format. The configuration also contained an event query controlling which Security-channel events were collected.
+
+This step did not modify the Wazuh configuration. It verified that the installed agent was already configured to collect Windows Security Event Log telemetry before the SIEM alert was investigated.
 
 ---
 
