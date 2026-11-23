@@ -66,11 +66,8 @@ This created a known event that could be followed from the endpoint through the 
 | Windows Event ID | **4625** |
 | Target Account | `TestUser` |
 | Target Domain | `DESKTOP-8J27DEL` |
-| Logon Type | **2 — Interactive** |
-| Source Address | `127.0.0.1` |
-| Authentication Package | `Negotiate` |
-| Logon Process | `User32` |
-| Failure Reason | Unknown user name or bad password |
+| Security Channel | `Security` |
+| Wazuh Description | Logon Failure - Unknown user or bad password |
 | Wazuh Rule | **60122** |
 | Wazuh Rule Level | **5** |
 | Wazuh Alerts Observed | **6** |
@@ -117,25 +114,10 @@ Event Viewer was then filtered for Event ID 4625, confirming that the failed aut
 
 The evidence confirmed that the event existed **before** Wazuh processing. This separated endpoint logging from SIEM collection and helped isolate the monitoring pipeline during troubleshooting.
 
----
-
-## 3. Verify Wazuh Security-Log Collection
-
-The existing Wazuh agent configuration on the Windows endpoint was inspected to confirm that the Windows `Security` Event Channel was configured as a monitored log source.
-
-From an Administrator PowerShell session, the agent configuration file was searched for the Security-channel entry:
-
-```powershell
-Select-String -Path 'C:\Program Files (x86)\ossec-agent\ossec.conf' -Pattern '<location>Security</location>' -Context 2,2
-```
-
-The surrounding configuration showed that `Security` was defined inside a `<localfile>` block and used the `eventchannel` log format. The configuration also contained an event query controlling which Security-channel events were collected.
-
-This step did not modify the Wazuh configuration. It verified that the installed agent was already configured to collect Windows Security Event Log telemetry before the SIEM alert was investigated.
 
 ---
 
-## 4. Locate the SIEM Alert
+## 3. Locate the SIEM Alert
 
 The Wazuh Threat Hunting interface was searched for the authentication-related rules:
 
@@ -160,7 +142,7 @@ The endpoint event had therefore successfully traveled through the monitoring pi
 
 ---
 
-## 5. Analyze the Alert
+## 4. Analyze the Alert
 
 The Wazuh document details provided additional context about the authentication failure.
 
@@ -180,32 +162,6 @@ TestUser
 Event ID: 4625
 Channel: Security
 ```
-
-### Logon Type
-
-```text
-2
-```
-
-**Logon Type 2** represents an interactive logon. This is consistent with the controlled sign-in attempt performed locally at the Windows endpoint.
-
-### Source Address
-
-```text
-127.0.0.1
-```
-
-`127.0.0.1` is the IPv4 loopback address. Combined with Logon Type 2, the evidence is consistent with a local authentication attempt rather than a remote network login.
-
-### Failure Information
-
-```text
-Failure reason: Unknown user name or bad password
-Status: 0xC000006D
-Substatus: 0xC000006A
-```
-
-The failure information is consistent with the intentionally incorrect password used during the test.
 
 ---
 
@@ -229,9 +185,9 @@ The shared account, host, event type, and timing allowed the endpoint evidence t
 
 A time difference was observed between timestamps displayed by Windows and the Wazuh dashboard.
 
-The underlying Windows event data included a UTC system timestamp, while the interfaces displayed timestamps using different local/time-zone interpretations.
+Windows and Wazuh displayed the same activity using different apparent times during the investigation.
 
-This became an additional troubleshooting lesson: **timestamp normalization and time-zone awareness are important when correlating security events across multiple systems.**
+This became an additional troubleshooting lesson: **time-zone awareness is important when correlating security events across multiple systems.**
 
 ---
 
@@ -239,7 +195,7 @@ This became an additional troubleshooting lesson: **timestamp normalization and 
 
 Wazuh included MITRE ATT&CK metadata with the alert.
 
-Automated ATT&CK mappings provide useful context, but they do not replace analyst validation. In this investigation, the activity was a controlled local password-failure test and did not demonstrate a real malicious account-access-removal event.
+Automated ATT&CK mappings provide useful context, but they do not replace analyst validation. In this investigation, the activity was a controlled password-failure test and did not demonstrate malicious activity.
 
 This reinforces an important SOC principle:
 
@@ -259,9 +215,9 @@ The failed authentication attempts were intentionally generated as part of an au
 
 - Expected endpoint
 - Expected test account
-- Interactive logon type
-- Local loopback source
-- Expected failed-password condition
+- Windows Event ID 4625
+- Matching Wazuh failed-logon alert
+- Timing consistent with the controlled test activity
 
 There was no evidence in this scenario of unauthorized remote access or malicious activity.
 
