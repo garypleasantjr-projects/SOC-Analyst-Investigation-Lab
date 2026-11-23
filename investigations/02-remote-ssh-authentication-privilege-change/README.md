@@ -363,7 +363,6 @@ The `evidence/` directory contains the screenshots used to support the findings 
 - [Terminal password-change success](evidence/07-terminal-password-change-success.webp)
 - [Wazuh Event ID 4738 account change](evidence/08-wazuh-4738-account-changed.webp)
 
-The evidence set contains separate screenshots for each distinct step rather than combining multiple events into one image.
 
 ---
 
