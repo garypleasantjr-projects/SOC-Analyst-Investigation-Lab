@@ -291,13 +291,13 @@ There was no evidence in this scenario of unauthorized remote access or maliciou
 
 ## Evidence Captured
 
-The `evidence/` directory contains the screenshots used directly in the investigation:
+The `evidence/` directory contains the verified screenshots used in this investigation:
 
 - [Windows Event Viewer — Event ID 4625](evidence/windows-event-viewer-4625.webp)
 - [Wazuh Threat Hunting — Rule 60122](evidence/wazuh-rule-60122-alerts.webp)
 - [Wazuh Event ID 4625 document details](evidence/wazuh-document-details-4625.webp)
 
-These images are stored as WebP files so they render directly in the GitHub investigation. Credential-bearing setup material is excluded from the public evidence set.
+Credential-bearing setup screenshots and browser screenshots containing unrelated personal information are intentionally excluded from the public repository.
 
 ---
 
