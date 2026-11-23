@@ -108,6 +108,10 @@ Windows Logon Success
 
 This confirmed that both failed and successful authentication activity reached the SIEM.
 
+![Wazuh authentication failures](evidence/01-wazuh-authentication-failures.webp)
+
+*Wazuh showing the repeated authentication failures generated during the remote SSH test.*
+
 ---
 
 ## 2. Validate the Successful SSH Logon
@@ -131,6 +135,10 @@ This tied the successful Windows network logon directly to OpenSSH.
 
 The generic 4624 event did **not** populate the source network address or source port; both were shown as `-` in the captured event.
 
+![Wazuh Event ID 4624 SSH logon details](evidence/02-wazuh-4624-ssh-logon-details.webp)
+
+*Wazuh Event ID 4624 showing `SOC-SSH-TEST-USER`, Logon Type 3, and the OpenSSH `sshd.exe` process.*
+
 ---
 
 ## 3. Identify the Remote SSH Source
@@ -144,6 +152,10 @@ sshd: Accepted password for SOC-SSH-TEST-USER from 172.16.121.1 port 51395 ssh2
 ```
 
 This confirmed that the successful SSH session originated from `172.16.121.1` on the VMware NAT network.
+
+![OpenSSH Operational log showing remote source address](evidence/03-openssh-source-address.webp)
+
+*Windows OpenSSH Operational log identifying the SSH source as `172.16.121.1` and source port `51395`.*
 
 ---
 
@@ -245,6 +257,10 @@ Password Last Set: 11/23/2026 12:23:03 PM
 
 The successful command output and the account-change event together supported the conclusion that the password modification succeeded after the account gained administrative privileges.
 
+![Privilege and password-change evidence](evidence/04-privilege-and-password-change.webp)
+
+*Combined evidence showing the Administrators-group change, privileged logon, denied password-change attempt, successful retry, and resulting account-change event.*
+
 ---
 
 ## Event Correlation
@@ -315,6 +331,19 @@ No evidence in this investigation indicated unauthorized access.
 - Source-address correlation
 - Endpoint telemetry analysis
 - Technical incident documentation
+
+---
+
+## Evidence Captured
+
+The `evidence/` directory contains the screenshots used to support the findings in this investigation:
+
+- [Wazuh authentication failures](evidence/01-wazuh-authentication-failures.webp)
+- [Wazuh Event ID 4624 SSH logon details](evidence/02-wazuh-4624-ssh-logon-details.webp)
+- [OpenSSH source-address evidence](evidence/03-openssh-source-address.webp)
+- [Privilege and password-change evidence](evidence/04-privilege-and-password-change.webp)
+
+The evidence set is intentionally limited to screenshots that demonstrate a distinct part of the investigation.
 
 ---
 
