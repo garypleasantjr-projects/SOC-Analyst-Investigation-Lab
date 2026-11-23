@@ -36,6 +36,10 @@ Analyst Triage and Assessment
 
 ## Lab Environment
 
+![Ubuntu Wazuh server interface showing the lab server IP address](evidence/wazuh-server-ip.png)
+
+*Ubuntu Wazuh server network interface used by the Windows endpoint to communicate with the SIEM.*
+
 | Component | Role |
 |---|---|
 | Windows 11 Pro VM | Monitored endpoint |
@@ -109,6 +113,10 @@ Multiple **Event ID 4625** entries were returned.
 
 Event Viewer was then filtered for Event ID 4625, confirming that the failed authentication attempts were present in the local Windows Security log and associated with `TestUser`.
 
+![Windows Event Viewer filtered for Event ID 4625](evidence/windows-event-viewer-4625.png)
+
+*Windows Event Viewer confirming failed logon events for the local test account.*
+
 ### Endpoint Finding
 
 The evidence confirmed that the event existed **before** Wazuh processing. This separated endpoint logging from SIEM collection and helped isolate the monitoring pipeline during troubleshooting.
@@ -149,11 +157,23 @@ Agent: Windows11EndpointVM
 
 The endpoint event had therefore successfully traveled through the monitoring pipeline and become searchable SIEM telemetry.
 
+![Wazuh Threat Hunting showing Rule 60122 alerts](evidence/wazuh-threat-hunting-60122.png)
+
+*Wazuh Threat Hunting showing six Rule 60122 failed-logon alerts from Windows11EndpointVM.*
+
+![Wazuh filtered authentication alert results](evidence/wazuh-rule-search-results.png)
+
+*Filtered Wazuh event results used during authentication-failure triage.*
+
 ---
 
 ## 5. Analyze the Alert
 
 The Wazuh document details provided additional context about the authentication failure.
+
+![Wazuh event details showing TestUser and Event ID 4625](evidence/wazuh-event-4625-details.png)
+
+*Wazuh document details correlating the target account, endpoint, Security channel, and Windows Event ID 4625.*
 
 ### Target Account
 
@@ -279,13 +299,15 @@ There was no evidence in this scenario of unauthorized remote access or maliciou
 
 ## Evidence Captured
 
-Supporting screenshots were captured for:
+The `evidence/` directory contains the portfolio-safe screenshots used in this investigation:
 
-1. Windows Event Viewer filtered for **Event ID 4625**
-2. Wazuh Threat Hunting results showing **six Rule 60122 alerts**
-3. Wazuh document details showing `TestUser`, the Security channel, and Event ID 4625
+- [Ubuntu Wazuh server IP configuration](evidence/wazuh-server-ip.png)
+- [Windows Event Viewer — Event ID 4625](evidence/windows-event-viewer-4625.png)
+- [Wazuh Threat Hunting — Rule 60122](evidence/wazuh-threat-hunting-60122.png)
+- [Wazuh filtered authentication alerts](evidence/wazuh-rule-search-results.png)
+- [Wazuh Event ID 4625 document details](evidence/wazuh-event-4625-details.png)
 
-Credential-bearing setup screenshots are intentionally excluded from the public repository.
+Credential-bearing setup screenshots and unrelated browser information are intentionally excluded from the public repository.
 
 ---
 
