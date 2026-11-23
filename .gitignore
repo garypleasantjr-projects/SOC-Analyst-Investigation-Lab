@@ -1,0 +1,31 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE files
+.vscode/
+.idea/
+*.swp
+
+# Temporary and local log files
+*.tmp
+*.temp
+*.bak
+*.log
+
+# Secrets and credentials
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.p12
+
+# Raw security evidence that may contain sensitive data
+*.pcap
+*.pcapng
+*.evtx
+
+# Wazuh / SIEM exports that may contain sensitive data
+*.jsonl
