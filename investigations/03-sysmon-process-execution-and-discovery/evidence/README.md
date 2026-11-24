@@ -1,6 +1,6 @@
 # Evidence Register — Investigation 03
 
-The following entries transcribe relevant fields from the original evidence captured on November 24, 2026. These are evidence transcriptions, not original screenshots or exported event JSON.
+The following entries transcribe relevant fields from the original evidence captured on November 24, 2026. These entries are transcriptions of the evidence images in this directory, not exported event JSON.
 
 ## E01–E05 — Windows Event Viewer
 
@@ -56,3 +56,18 @@ The event metadata on pages 1–2 identifies agent 001, Windows11EndpointVM, pro
 ## Evidence scope
 
 The first five entries belong to CMD PID 660. The later Wazuh entries belong to the distinct CMD PID 9244 execution tree. They must not be merged into a single process instance. No command output or complete raw-event archive was captured in these records.
+
+## Evidence images
+
+- [01-event-viewer-whoami.webp](01-event-viewer-whoami.webp)
+- [02-event-viewer-hostname.webp](02-event-viewer-hostname.webp)
+- [03-event-viewer-ipconfig.webp](03-event-viewer-ipconfig.webp)
+- [04-event-viewer-net-user.webp](04-event-viewer-net-user.webp)
+- [05-event-viewer-notepad.webp](05-event-viewer-notepad.webp)
+- [06-wazuh-cmd.webp](06-wazuh-cmd.webp)
+- [07-wazuh-net-user.webp](07-wazuh-net-user.webp)
+- [08-wazuh-net1.webp](08-wazuh-net1.webp)
+- [09-wazuh-net-accounts.webp](09-wazuh-net-accounts.webp)
+- [10-wazuh-net-localgroup-page-1.webp](10-wazuh-net-localgroup-page-1.webp)
+- [10-wazuh-net-localgroup-page-2.webp](10-wazuh-net-localgroup-page-2.webp)
+- [10-wazuh-net-localgroup-page-3.webp](10-wazuh-net-localgroup-page-3.webp)
