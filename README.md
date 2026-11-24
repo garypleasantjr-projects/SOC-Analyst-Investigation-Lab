@@ -183,6 +183,22 @@ The investigation includes:
 
 **Final disposition:** Authorized Testing / Benign Activity
 
+### [Investigation 03 — Sysmon Process Execution and Discovery](investigations/03-sysmon-process-execution-and-discovery/README.md)
+
+The third investigation focuses on Sysmon process creation telemetry, parent-child process correlation, and discovery activity detected in Wazuh.
+
+The investigation includes:
+
+- Sysmon Event ID **1**
+- Process IDs and process GUIDs
+- Multi-generation process tree reconstruction
+- Local account, administrator group, and account policy discovery
+- Wazuh Rule **92031**, level **3**
+- MITRE ATT&CK **T1087** (Wazuh rule mapping)
+- Endpoint telemetry versus SIEM alerts
+
+**Final disposition:** Authorized Testing / Benign Activity
+
 ---
 
 ## Technologies
@@ -193,7 +209,7 @@ The investigation includes:
 | Endpoint | Windows 11 Pro |
 | Server | Ubuntu Server |
 | Virtualization | VMware Fusion |
-| Windows Logging | Windows Security Event Log |
+| Windows Logging | Windows Security Event Log, Sysmon |
 | Investigation | Wazuh Dashboard |
 | Administration | PowerShell |
 | Networking | TCP/IP |
@@ -217,7 +233,9 @@ SOC-Analyst-Investigation-Lab/
 │   │   └── README.md
 │   ├── 02-remote-ssh-authentication-privilege-change/
 │   │   └── README.md
-│   └── 03-...
+│   └── 03-sysmon-process-execution-and-discovery/
+│       ├── README.md
+│       └── evidence/
 │
 └── screenshots/
 ```
