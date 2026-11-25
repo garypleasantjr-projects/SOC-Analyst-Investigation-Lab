@@ -91,4 +91,4 @@ The discovery commands were intentionally executed in an authorized lab environm
 
 ## Evidence
 
-The [evidence directory](evidence/) contains the original screenshot content exported as WebP images, including three pages rendered from the Wazuh alert PDF. The [event field register](evidence/README.md) records the corresponding identifiers and timestamps.
+The [evidence directory](evidence/) contains the original screenshot content exported as WebP images, including three pages rendered from the Wazuh alert PDF.
