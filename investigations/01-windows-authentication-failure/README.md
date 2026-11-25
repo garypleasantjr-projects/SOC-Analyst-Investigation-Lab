@@ -95,16 +95,7 @@ This confirmed that the endpoint was configured to record both successful and fa
 
 ## 2. Validate the Endpoint Event
 
-The Windows Security log was queried for failed logons:
-
-```powershell
-Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625; StartTime=(Get-Date).AddMinutes(-30)} |
-Select-Object TimeCreated, Id, Message
-```
-
-Multiple **Event ID 4625** entries were returned.
-
-Event Viewer was then filtered for Event ID 4625, confirming that the failed authentication attempts were present in the local Windows Security log and associated with `TestUser`.
+Event Viewer was filtered for Event ID 4625, confirming that the failed authentication attempts were present in the local Windows Security log and associated with `TestUser`.
 
 ![Windows Event Viewer filtered for Event ID 4625](evidence/windows-event-viewer-4625.webp)
 
